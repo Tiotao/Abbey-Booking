@@ -18,6 +18,6 @@ This Booking System is adapted from [google-calendar-app](https://github.com/lil
 
 ## Run
 
-1. Fill up the relavent constants in `config0.py` and change its name to 'config.py'
-2. Set up virtualenv based on 'requirements.txt'
-3. run 'python app.py' in the terminal
+1. Fill up the relavent constants in `config0.py` and change its name to `config.py`
+2. Set up virtualenv based on `requirements.txt`
+3. run `python app.py` in the terminal
