@@ -1,0 +1,21 @@
+
+Dear Admin,
+
+{{event['name']}} has made a booking.
+
+Please check the details of the booking:
+
+Name: {{event['name']}}
+Contact: {{event['phone']}}
+Email: {{event['email']}}
+Room: {{event['room']}}
+Start: {{ event['starttime']}}
+End: {{ event['endtime']}}
+Purpose:  {{event['purpose']}}
+
+Visit the control panel via:
+http://abbey.tembusupac.org/approve
+
+Regards,
+The Matrix
+

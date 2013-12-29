@@ -1,0 +1,16 @@
+Dear {{event['name']}},
+
+Your booking on {{event['date']}} {{event['start_time']}} - {{ event['end_time']}} has been approved. 
+
+Please check the details of your booking:
+
+Name: {{event['name']}}
+Date: {{ event['date']}}
+Duration: {{event['start_time']}} - {{ event['end_time']}}
+Purpose:  {{event['purpose']}}
+
+Please contact Austin (HP:93297828) 5 minutes before your booking time so that he can open the Abbey for you on time. Other enquires, please contact us by email: abbey@tembusupac.org
+
+Regards,
+
+The Abbey

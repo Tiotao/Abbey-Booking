@@ -1,0 +1,19 @@
+{% extends "layout.html" %}
+{% block content %}
+<h4>Welcome! </h4>
+            <h6>To get started, please sign in with your Matric No.</h6>
+
+<br>
+  		<form action="" method=post data-abide>
+      <div class="row">
+      <div class="small-12 columns">
+     	<label>Matric Number <small>(without the last character)</small></label>
+      	<input pattern="^[A|U][0-9]{7}$" type=text name=openid required>
+        <small class="error">A valid Matric Number is required.</small>
+      	<input class="button small radius" type=submit value="Sign in">
+      	<input type=hidden name=next value="{{ next }}">
+        </div>
+        </div>
+  	</form>
+
+{% endblock %}

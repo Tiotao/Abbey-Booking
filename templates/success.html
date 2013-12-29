@@ -1,0 +1,28 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+    {% if event is none %}
+    <h6>Whoops, looks like there was some trouble scheduling your event!</h6>
+    <br>
+    <input type="button" onclick="history.back();" value="Try Again" class="button [primary radius round]">
+    {% else %}
+    <h6>Woohoo, your booking was scheduled, please wait for admin's approval!</h6>
+
+    <br>
+    <dl>
+        <dt>Booking Details:</dt>
+        <dd>
+        <ul>
+            <li>Name: {{ apptName }}</li>
+            <li>Purpose: {{ apptPurpose }}</li>
+            <li>Start: {{ apptStart }}</li>
+            <li>End: {{ apptEnd }}</li>
+        </ul>
+        <dd>
+    </dl>
+    <form action="/search"><input class="button small radius" type="submit" value="Schedule Another Booking!"></form>
+
+    {% endif %}
+
+{% endblock %}

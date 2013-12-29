@@ -1,0 +1,25 @@
+ {% extends "layout.html" %}
+{% block content %}
+
+<form action="/approve_booking" method="post" id="ApproveBooking">
+
+        <h4>Approve Booking:</h4>
+        <br>
+        {% if event_list ==[] %}
+        <p>There is no booking waiting for approval!</p>
+        {% endif %}
+                {% for event in event_list %}
+  
+                <input type="checkbox" name="eventlist" value=" {{ event['id'] }} "> <label for="{{event['id']}}">{{ event['name'] }} {{ event['date']}} {{ event['start_time']}} - {{ event['end_time']}}</label>
+  <a href="/disapprove_booking/{{ event['id'] }}"><i class="fa fa-times"></i></a>
+                <br>
+                {% endfor %}
+                <button id="submitApprove" type="submit" class="button small radius">Approve</button>
+                
+
+        
+
+
+    </form>
+
+{% endblock %}

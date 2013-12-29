@@ -1,0 +1,105 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+    <form action="/search_events" method="POST" id="searchApptsForm">
+
+            <h4>Hi {{name}}! </h4>
+            <h6>Welcome to the Abbey Booking System!</h6>
+            
+            <select name="calendarlist" value="choose a calendar" class="select-block span5" style="display:none">
+                {% for calendar in calendar_list %}
+                <option value="{{ calendar['id'] }} {{ calendar['timeZone'] }}">{{ calendar['summary'] }}</option>
+                {% endfor %}
+            </select>
+
+            <h6><small>Please specify your booking date and time</small></h6>
+            <label>Date:</label>
+            <input class="small-12" id="start" name="apptStartDate" type="text" required>
+            </input>
+
+            <label>Start Time:</label>
+            <select id="apptStartTime" name="apptStartTime" required>
+                <option value="12:00">12:00</option>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="20:00">21:00</option>
+                <option value="20:30">21:30</option>
+                <option value="20:00">22:00</option>
+                <option value="20:30">22:30</option>
+                <option value="20:00">23:00</option>
+                <option value="20:30">23:30</option>
+            </select>
+           
+
+            <label>End Time:</label>
+            <select id="apptEndTime" name="apptEndTime" required>
+                <option value="12:30">12:30</option>
+                <option value="13:00">13:00</option>
+                <option value="13:30">13:30</option>
+                <option value="14:00">14:00</option>
+                <option value="14:30">14:30</option>
+                <option value="15:00">15:00</option>
+                <option value="15:30">15:30</option>
+                <option value="16:00">16:00</option>
+                <option value="16:30">16:30</option>
+                <option value="17:00">17:00</option>
+                <option value="17:30">17:30</option>
+                <option value="18:00">18:00</option>
+                <option value="18:30">18:30</option>
+                <option value="19:00">19:00</option>
+                <option value="19:30">19:30</option>
+                <option value="20:00">20:00</option>
+                <option value="20:30">20:30</option>
+                <option value="20:00">21:00</option>
+                <option value="20:30">21:30</option>
+                <option value="20:00">22:00</option>
+                <option value="20:30">22:30</option>
+                <option value="20:00">23:00</option>
+                <option value="20:30">23:30</option>
+                <option value="20:30">24:00</option>
+            </select>
+            <br>
+            <button id="submitApptSearch" type="submit" class="button small radius">Find Slots</button>
+            <br>
+
+    </form>
+
+
+
+<script>
+$('#start').fdatepicker({
+                    format: 'yyyy-mm-dd'
+                });
+$('#end').fdatepicker({
+                    format: 'yyyy-mm-dd'
+                });
+$( "#apptEndTime option:gt(5)" ).attr("disabled","disabled");
+
+$( "#apptStartTime" ).change(function() {
+    $( "#apptEndTime option").removeAttr('disabled');
+    var index = $( "#apptStartTime" )[0].selectedIndex;
+    $("#apptEndTime")[0].selectedIndex = index;
+    $( "#apptEndTime option:lt("+ index +")" ).attr("disabled","disabled");
+    $( "#apptEndTime option:gt("+ (index+5) +")" ).attr("disabled","disabled");
+});
+
+</script>
+
+{% endblock %}
+

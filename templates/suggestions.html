@@ -1,0 +1,63 @@
+{% extends "layout.html" %}
+{% block content %}
+
+
+    {% if not free_dates %}
+    <h6>Sorry, we couldn't find an open block at the time requested! :(</h6>
+    <br>
+    <input type="button" onclick="history.back();" value="Try Again" class="button small radius">
+    {% else %}
+    <form action="/schedule_event" method="POST" id="scheduleEventForm" data-abide>
+        
+            <input id="apptCalendarId" name="apptCalendarId" type="hidden" value="{{ calendarid }}"></input>
+
+            <select style="display:none" name="apptOptions" class="select-block span5">
+                {% for date in free_dates %}
+                <option value="{{ date }} {{ starttime }} {{ endtime }} {{ timezone }}">{{ date }} from {{ starttime }} to {{ endtime }}</option>
+                {% endfor %}
+            </select>
+
+            {% for date in free_dates %}
+                <h6>{{ date }} 
+                <small>from {{ starttime }} to {{ endtime }}</small></h6>
+            {% endfor %}
+
+            <div class="row">
+                <div class="small-12 columns">
+                    <label>Room:</label>
+                    <input pattern="^\d{1,2}[\-]\d{3}([A-Z])?$" id="apptRoom" name="apptRoom" type="text" required></input>
+
+
+                    <small class="error">A valid room number is required: 12-161D.</small>
+                </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+            <label>Contact No:</label>
+            <input pattern="^[8-9][0-9]{7}$" id="apptContact" name="apptContact" type="text" required ></input>
+            <small class="error">A valid phone number is required.</small>
+            </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+            <label>Number of People:</label>
+            <input pattern="^[0-9]{1,2}$" id="apptPeople" name="apptPeople" type="text" required></input>
+            <small class="error">A valid number is required.</small>
+            </div>
+            </div>
+            <div class="row">
+                <div class="small-12 columns">
+            <label>Booking Purpose:</label>
+            <input id="apptPurpose" name="apptPurpose" type="text" required></input>
+            <small class="error">A valid purpose is required.</small>
+            </div>
+            </div>
+            <br>
+            <button id="submitNewAppt" type="submit" class="button small radius">Schedule Appointment!</button>
+        
+    </form>
+
+
+    {% endif %}
+
+{% endblock %}

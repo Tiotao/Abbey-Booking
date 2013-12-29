@@ -1,0 +1,22 @@
+Dear {{event['name']}},
+
+We regret to inform you that your booking on {{event['date']}} {{event['start_time']}} - {{ event['end_time']}} is not approved. 
+
+Please check the details of your booking:
+
+Name: {{event['name']}}
+Date: {{ event['date']}}
+Duration: {{event['start_time']}} - {{ event['end_time']}}
+Purpose:  {{event['purpose']}}
+
+The disapproval may be because of following reasons:
+
+- Abbey official events
+- Tembusu Interest Group regular training
+- Abbey regular maintance
+
+Please contact Austin (HP:93297828) if you have any questions regarding to your booking. Other enquires, please contact us by email: abbey@tembusupac.org
+
+Regards,
+
+The Abbey
