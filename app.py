@@ -586,5 +586,5 @@ def schedule_event():
 
         return render_template("success.html", event=created_event, apptName=json['name'], apptStart=json['start'], apptEnd=json['end'], apptPurpose=json['purpose'])
 
-if __name__ == "__main__":
-   app.run(debug=False)
+#if __name__ == "__main__":
+#  app.run(debug=False)

@@ -35,10 +35,10 @@ nosetests.xml
 .project
 .pydevproject
 
+env
 key.p12
 config.py
 a_credentials_file
-env
 google-api-python-client-1.2
 ~
 tmp
