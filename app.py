@@ -105,6 +105,8 @@ def get_start_end_rfc3339(dt):
 def datetime_combine_rfc3339(date, time):
     combined = datetime.datetime.combine(date, time)
     rfc3339_datetime = rfc3339(combined)
+    SGT = "+08:00"
+    rfc3339_datetime = rfc3339_datetime[:-6] + SGT
     return rfc3339_datetime
 
 # function to generate list of suggested free dates for user to choose from
@@ -134,49 +136,6 @@ def generate_date_list(startdate, enddate, starttime, endtime, calendarid):
         event_list = service.events().list(calendarId=APPROVED_CAL_ID, timeMin=start_rfc3339, timeMax=end_rfc3339).execute()['items']
         event_list.extend(service.events().list(calendarId=PENDING_CAL_ID, timeMin=start_rfc3339, timeMax=end_rfc3339).execute()['items'])
         print "o:", event_list
-        # if there are no events given back, then that time is empty
-        # add date to the suggested free time list
-        if not event_list:
-            free_dates.append(current_date)
-        # if the length of the free_dates array has reached 5, then break from loop
-        if len(free_dates) == 5:
-            break
-        # increment current_date by 1 day to continue while loop
-        current_date += td
-    return free_dates
-
-# function to turn strings of date and time into rfc3339 format for Google Calendar API call
-# returns string of datetime in rfc339 format
-def datetime_combine_rfc3339(date, time):
-    combined = datetime.datetime.combine(date, time)
-    rfc3339_datetime = rfc3339(combined)
-    return rfc3339_datetime
-
-# function to generate list of suggested free dates for user to choose from
-def generate_date_list(startdate, enddate, starttime, endtime, calendarid):
-    apptStartDate = datetime.datetime.strptime(startdate, '%Y-%m-%d').date()
-    apptStartTime = datetime.datetime.strptime(starttime, '%H:%M').time()
-    apptEndDate = datetime.datetime.strptime(enddate, '%Y-%m-%d').date()
-    apptEndTime = datetime.datetime.strptime(endtime, '%H:%M').time()
-    # td used to increment while loop one day at a time (24 hours)
-    td = datetime.timedelta(hours=24)
-    # store user's requested start time for use in while loop
-    current_date = apptStartDate
-    # empty list to store suggested free dates
-    free_dates = []
-
-    #authorization
-    service = authorize()
-
-    # loop from user's requested start date to end date
-    while current_date <= apptEndDate:
-        # format start and end times for Google Calendar API call
-        start_rfc3339 = datetime_combine_rfc3339(current_date, apptStartTime)
-        end_rfc3339 = datetime_combine_rfc3339(current_date, apptEndTime)
-
-        event_list = service.events().list(calendarId=APPROVED_CAL_ID, timeMin=start_rfc3339, timeMax=end_rfc3339).execute()['items']
-        event_list.extend(service.events().list(calendarId=PENDING_CAL_ID, timeMin=start_rfc3339, timeMax=end_rfc3339).execute()['items'])
-
         # if there are no events given back, then that time is empty
         # add date to the suggested free time list
         if not event_list:
@@ -506,6 +465,7 @@ def search_events():
         for date in free_dates:
             free_dates_string.append(date.strftime("%m/%d/%Y"))
         # send list of free dates to render on suggestions page
+        print free_dates_string
         return render_template("suggestions.html", free_dates=free_dates_string, starttime=start_formatted, endtime=end_formatted, calendarid=calendarid, timezone=calendarTimezone)
 
 @app.route("/approve_booking", methods=['POST', 'GET'])
@@ -586,5 +546,5 @@ def schedule_event():
 
         return render_template("success.html", event=created_event, apptName=json['name'], apptStart=json['start'], apptEnd=json['end'], apptPurpose=json['purpose'])
 
-#if __name__ == "__main__":
-#  app.run(debug=False)
+if __name__ == "__main__":
+  app.run(debug=True)
