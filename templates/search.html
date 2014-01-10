@@ -15,7 +15,7 @@
 
             <h6><small>Please specify your booking date and time</small></h6>
             <label>Date:</label>
-            <input class="small-12" id="start" name="apptStartDate" type="text" required>
+            <input class="small-12" id="start" name="apptStartDate" type="text" required readonly>
             </input>
 
             <label>Start Time:</label>
@@ -83,8 +83,16 @@
 
 
 <script>
+var nowTemp = new Date();
+var now = new Date(nowTemp.getFullYear(), nowTemp.getMonth(), nowTemp.getDate(), 0, 0, 0, 0);
+
 $('#start').fdatepicker({
-                    format: 'yyyy-mm-dd'
+                    format: 'yyyy-mm-dd',
+                    onRender: function (date) {
+                        var msPerDay = 8.64e7
+                        var dateDiff = (date.valueOf() - now.valueOf())/msPerDay
+                        return (date.valueOf() <= now.valueOf())||(dateDiff > 14) ? 'disabled' : '';
+                    }
                 });
 $('#end').fdatepicker({
                     format: 'yyyy-mm-dd'
