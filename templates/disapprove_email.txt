@@ -9,11 +9,9 @@ Date: {{ event['date']}}
 Duration: {{event['start_time']}} - {{ event['end_time']}}
 Purpose:  {{event['purpose']}}
 
-The disapproval may be because of following reasons:
+The disapproval is because of the reason stated below:
 
-- Abbey official events
-- Tembusu Interest Group regular training
-- Abbey regular maintance
+{{reason}}
 
 Please contact Austin (HP:93297828) if you have any questions regarding to your booking. Other enquires, please contact us by email: abbey@tembusupac.org
 

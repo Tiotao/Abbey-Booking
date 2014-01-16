@@ -279,16 +279,16 @@ def send_alert_mail(event, email_address):
 
 # send disapprove email
 @async
-def send_disapprove_mail(event, email_address):
+def send_disapprove_mail(event, email_address, reason):
     with app.test_request_context():
         msg = Message(
                 'Your Booking is not approved',
                 sender=SERVICE_MAIL,
                 recipients=[email_address])
         msg.body = render_template("disapprove_email.txt", 
-            event=event)
+            event=event, reason=reason)
         msg.html = render_template("disapprove_email.html", 
-            event=event)
+            event=event, reason=reason)
         mail.send(msg)
 
 
@@ -304,7 +304,7 @@ def to_approve(eid):
     send_approve_mail(event_json, email_address)
 
 @async
-def to_disapprove(eid):
+def to_disapprove(eid, reason):
     eid = str(eid).strip()
     service = authorize()
     deleted_event = service.events().get(calendarId=PENDING_CAL_ID, eventId=eid).execute()
@@ -312,7 +312,7 @@ def to_disapprove(eid):
     event_json = created_event_to_json(deleted_event)
     email_address = deleted_event['attendees'][0]['email']
     service.events().delete(calendarId=PENDING_CAL_ID, eventId=eid).execute()
-    send_disapprove_mail(event_json, email_address)
+    send_disapprove_mail(event_json, email_address, reason)
 
 def create_event_and_log(event, apptRoom, apptContact, apptPeople):
     service = authorize()
@@ -488,8 +488,9 @@ def disapprove_booking(eid):
     elif not validate_admin_from_spreadsheet(session['matric']):
         return render_template('access_denied.html')
     else:
-        if eid:
-          to_disapprove(eid)
+        reason = request.form['disapproveReason']
+        if eid and reason:
+            to_disapprove(eid, reason)
         return redirect(url_for('approve'))
 
 @app.route("/schedule_event", methods=['POST', 'GET'])
@@ -546,5 +547,5 @@ def schedule_event():
 
         return render_template("success.html", event=created_event, apptName=json['name'], apptStart=json['start'], apptEnd=json['end'], apptPurpose=json['purpose'])
 
-if __name__ == "__main__":
-  app.run(debug=True)
+#if __name__ == "__main__":
+  #app.run(debug=True)

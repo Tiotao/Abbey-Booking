@@ -3,23 +3,43 @@
 
 <form action="/approve_booking" method="post" id="ApproveBooking">
 
-        <h4>Approve Booking:</h4>
+        <h4>Manage Booking:</h4>
         <br>
         {% if event_list ==[] %}
         <p>There is no booking waiting for approval!</p>
         {% endif %}
                 {% for event in event_list %}
   
-                <input type="checkbox" name="eventlist" value=" {{ event['id'] }} "> <label for="{{event['id']}}">{{ event['name'] }} {{ event['date']}} {{ event['start_time']}} - {{ event['end_time']}}</label>
-  <a href="/disapprove_booking/{{ event['id'] }}"><i class="fa fa-times"></i></a>
-                <br>
+                <input type="checkbox" name="eventlist" value=" {{ event['id'] }} "/> <label for="{{event['id']}}">{{ event['name'] }} {{ event['date']}} {{ event['start_time']}} - {{ event['end_time']}}</label>
+  <a href="#" data-reveal-id="disapprove-{{ event['id'] }}"><i class="fa fa-times"></i></a>
+                <br/>
                 {% endfor %}
                 <button id="submitApprove" type="submit" class="button small radius">Approve</button>
-                
-
-        
-
-
     </form>
+
+    {% for event in event_list%}
+    <div id="disapprove-{{ event['id'] }}" class="reveal-modal small" data-reveal>
+                <form action="/disapprove_booking/{{ event['id'] }}" method="POST" id="disapproveForm-{{ event['id'] }}" data-abide>
+                  <h2>Disapprove Booking</h2>
+                  <br/>
+                  <div class="panel">
+                  <h4>Booking Information</h4>
+                  <ul>
+                    <li>Name: {{ event['name'] }}</li>
+                    <li>Date: {{ event['date']}}</li>
+                    <li>Time: {{ event['start_time']}} - {{ event['end_time']}}</li>
+                    <li>Purpose: {{ event['purpose']}}</li>
+                  </ul>
+                  </div>
+                  
+                            <label>Reason:</label>
+                            <input id="disapproveReason-{{ event['id'] }}" name="disapproveReason" type="text" required/>
+                            <small class="error">A valid reason is required.</small>
+                    <div class="text-right">
+                    <button id="submitDisapproval-{{ event['id'] }}" type="submit" class="button alert small radius" align="right">Disapprove</button></div>
+                    </form>
+                  <a class="close-reveal-modal">&#215;</a>
+                </div>
+    {% endfor %}
 
 {% endblock %}
