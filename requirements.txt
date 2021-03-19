@@ -2,7 +2,7 @@ Flask==0.9
 Flask-Mail==0.9.0
 Flask-OAuth==0.12
 Flask-OpenID==1.1.1
-Jinja2==2.6
+Jinja2==2.11.3
 Werkzeug==0.8.3
 apiclient==1.0.2
 blinker==1.3
